@@ -3,7 +3,7 @@
 		<div class="container">
 			<div class="sec-title p-b-22">
 				<h3 class="m-text5 t-center">
-					Our Products
+					Our Glasses
 				</h3>
 			</div>
 
@@ -45,9 +45,9 @@
 									</div>
 
 									<div class="block2-txt p-t-20">
-										<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+										<router-link :to="'item/' + item.id" class="block2-name dis-block s-text3 p-b-5">
 											{{item.product_name}}
-										</a>
+										</router-link>
 
 										<span class="block2-price m-text6 p-r-5">
 											{{'$' + item.product_price}}
@@ -78,9 +78,9 @@
 									</div>
 
 									<div class="block2-txt p-t-20">
-										<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+										<router-link :to="'item/' + item.id" class="block2-name dis-block s-text3 p-b-5">
 											{{item.product_name}}
-										</a>
+										</router-link>
 
 										<span class="block2-price m-text6 p-r-5">
 											{{'$' + item.product_price}}
@@ -111,9 +111,9 @@
 									</div>
 
 									<div class="block2-txt p-t-20">
-										<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+										<router-link :to="'item/' + item.id" class="block2-name dis-block s-text3 p-b-5">
 											{{item.product_name}}
-										</a>
+										</router-link>
 
 										<span class="block2-price m-text6 p-r-5">
 											{{'$' + item.product_price}}

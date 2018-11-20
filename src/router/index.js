@@ -15,7 +15,7 @@ export default new Router({
       component: Home
     },
     {
-      path: '/about:user_id',
+      path: '/about/:user_id',
       name: 'About',
       component: About
     },
@@ -25,7 +25,7 @@ export default new Router({
       component: Login
     },
     {
-      path: '/item:item_id',
+      path: '/item/:item_id',
       name: 'Product',
       component: Product
     },

@@ -8,19 +8,12 @@
                     Home
                     <i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
                 </a>
-
                 <a href="product.html" class="s-text16">
-                    Women
+                    {{ item.product_category }} 
                     <i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
                 </a>
-
-                <a href="#" class="s-text16">
-                    T-Shirt
-                    <i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
-                </a>
-
                 <span class="s-text17">
-                    Boxy T-Shirt with Roll Sleeve Detail
+                    {{ item.product_name }} 
                 </span>
             </div>
             
@@ -28,24 +21,23 @@
                 <div class="w-size13 p-t-30 respon5">
                     <div class="wrap-slick3 flex-sb flex-w">
                         <div class="wrap-slick3-dots"></div>
-                                <div class="wrap-pic-w">
-                                    <img src="../assets/images/product-detail-01.jpg" alt="IMG-PRODUCT">
-                                </div>
-              
+                            <div class="wrap-pic-w">
+                                <img :src="getCoverImg(item.product_photos)" alt="IMG-PRODUCT">
+                            </div>
                     </div>
                 </div>
 
                 <div class="w-size14 p-t-30 respon5">
                     <h4 class="product-detail-name m-text16 p-b-13">
-                        Boxy T-Shirt with Roll Sleeve Detail
+                        {{ item.product_name }} 
                     </h4>
 
                     <span class="m-text17">
-                        $22
+                        {{ '$' + item.product_price }} 
                     </span>
 
                     <p class="s-text8 p-t-10">
-                        Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.
+                        {{ item.product_description }}
                     </p>
 
                     <!--  -->
@@ -56,39 +48,9 @@
                             </div>
                           	<div class="filter-color p-t-22 bo3">
                                 <ul class="flex-w">
-                                    <li class="m-r-10">
-                                        <input class="checkbox-color-filter" id="color-filter1" type="checkbox" name="color-filter1">
-                                        <label class="color-filter color-filter1" for="color-filter1"></label>
-                                    </li>
-
-                                    <li class="m-r-10">
-                                        <input class="checkbox-color-filter" id="color-filter2" type="checkbox" name="color-filter2">
-                                        <label class="color-filter color-filter2" for="color-filter2"></label>
-                                    </li>
-
-                                    <li class="m-r-10">
-                                        <input class="checkbox-color-filter" id="color-filter3" type="checkbox" name="color-filter3">
-                                        <label class="color-filter color-filter3" for="color-filter3"></label>
-                                    </li>
-
-                                    <li class="m-r-10">
-                                        <input class="checkbox-color-filter" id="color-filter4" type="checkbox" name="color-filter4">
-                                        <label class="color-filter color-filter4" for="color-filter4"></label>
-                                    </li>
-
-                                    <li class="m-r-10">
-                                        <input class="checkbox-color-filter" id="color-filter5" type="checkbox" name="color-filter5">
-                                        <label class="color-filter color-filter5" for="color-filter5"></label>
-                                    </li>
-
-                                    <li class="m-r-10">
-                                        <input class="checkbox-color-filter" id="color-filter6" type="checkbox" name="color-filter6">
-                                        <label class="color-filter color-filter6" for="color-filter6"></label>
-                                    </li>
-
-                                    <li class="m-r-10">
-                                        <input class="checkbox-color-filter" id="color-filter7" type="checkbox" name="color-filter7">
-                                        <label class="color-filter color-filter7" for="color-filter7"></label>
+                                    <li class="m-r-10"  v-for="(color, index) in colors" :key="index">
+                                        <input class="checkbox-color-filter" :id="index" type="checkbox" @change="selectColor(index)">
+                                        <label class="color-filter" :style="[color, checked_color == index ? border_style : null]" :for="index"></label>
                                     </li>
                                 </ul>
                             </div>
@@ -145,7 +107,7 @@
 
                                 <div class="btn-addcart-product-detail size9 trans-0-4 m-t-10 m-b-10">
                                     <!-- Button -->
-                                    <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
+                                    <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4" @click="addToCart(item)">
                                         Add to Cart
                                     </button>
                                 </div>
@@ -153,8 +115,8 @@
                         </div>
                     </div>
                     <div class="p-b-10">
-                        <span class="s-text8 m-r-35">ID: MUG-01</span>
-                        <span class="s-text8">Categories: Mug, Design</span>
+                        <span class="s-text8 m-r-35">ID: {{$route.params.item_id}}</span>
+                        <span class="s-text8">Categories: {{item.product_category}}</span>
                     </div>
 
                     <!--  -->
@@ -186,50 +148,32 @@
                  <div class="input-group p-input-group">
                     <ul class=" p-t-10">
                         <strong class="label-ul-title">Lense Option</strong>
-                        <small >The 1.59 polycarbcnate lense high impact resistant</small>
+                        <small >{{ item.options['lense_option1'].lense_option_label }}</small>
                         
                         <li class="s-text8">
                         Single Vision 1.59 <input type="number" class="input-number" placeholder=" Distance"/>
                         or <input type="number" class="input-number" placeholder=" Near"/>
                         price $ 30</li>
+                         <div v-for="(option, index) in item.options['lense_option1']" :key="Math.random() + index">
+                            <li class="s-text8"  v-if="index.indexOf('label') < 0"><input type="checkbox" class="m-r-10">{{option.text + ' $ ' + option.price}}</li>
+                        </div>
 
-                        <li class="s-text8"><input type="checkbox" class="m-r-10">Anti-glare(reduce glare) Price: $60</li>
-
-                        <li class="s-text8"><input type="checkbox" class="m-r-10">Transition(In and outdoor change color ) Grey Price: $60</li>
-
-                        <li class="s-text8"><input type="checkbox" class="m-r-10">Transition(In and outdoor change color ) Black Price: $60</li>
-
-                        <li class="s-text8"><input type="checkbox" class="m-r-10">Polarized (Sun lenses reduce glare) Grey Price: $60</li>
-
-                        <li class="s-text8"><input type="checkbox" class="m-r-10">Polarized (Sun lenses reduce glare) Black Price: $60</li>
-
-                        <li class="s-text8"><input type="checkbox" class="m-r-10">TinT (Included UV protection Does not reduce glare) Price: $30</li>
-                       
                         <strong class="label-ul-title">Lense Option</strong>
-
-                        <small >The 1.67 Hi-index provides a thinner lenses for high prescription. It reduces thickness on the edge. (Recommended for spherical power of +/- 6.00 abd above)</small>
+                        <small >{{ item.options['lense_option2'].lense_option_label }}</small>
 
                         <li class="s-text8"> Single Vision 1.67  <input type="number" class="input-number" placeholder=" Distance"/>
                         or <input type="number" class="input-number" placeholder=" Near"/>
                         price $ 60</li>
 
-                        <li class="s-text8"><input type="checkbox" class="m-r-10">Anti-glare(reduce glare) Price: $30</li>
-
-                        <li class="s-text8"><input type="checkbox" class="m-r-10">Transition(In and outdoor change color ) Grey Price: $160</li>
-
-                        <li class="s-text8"><input type="checkbox" class="m-r-10">Polariged (Sun lenses reduce glare) Grey Price: $100</li>
-
-                        <li class="s-text8"><input type="checkbox" class="m-r-10">Polariged (Sun lenses reduce glare) Brown Price: $100</li>
+                         <div v-for="(option, index) in item.options['lense_option2']" :key="Math.random() + index">
+                            <li class="s-text8"  v-if="index.indexOf('label') < 0"><input type="checkbox" class="m-r-10">{{option.text + ' $ ' + option.price}}</li>
+                        </div>
 
                         <strong class="label-ul-title">Lense Coating Option</strong>
 
-                        <li class="s-text8"><input type="checkbox" class="m-r-10">Anti-glare(reduce glare) Price: $30</li>
-
-                        <li class="s-text8"><input type="checkbox" class="m-r-10">Transition(In and outdoor change color ) Price: $40</li>
-
-                        <li class="s-text8"><input type="checkbox" class="m-r-10">Polariged (Sun lenses reduce glare) Price: $50</li>
-
-                        <li class="s-text8"><input type="checkbox" class="m-r-10">TinT (Included UV protection Does not reduce glare)Price: $30</li>
+                        <div v-for="(option, index) in item.options['lense_option3']" :key="Math.random() + index">
+                            <li class="s-text8"  v-if="index.indexOf('label') < 0"><input type="checkbox" class="m-r-10">{{option.text + ' $ ' + option.price}}</li>
+                        </div>
                     </ul>
                 </div>
             </div>
@@ -238,8 +182,65 @@
 </template>
 
 <script>
+import { bus } from '../main'
+import firebase from '@/firebase/init'
+const db = firebase.firestore()
 export default {
-    name:"Item"
+    name:"Item",
+    data() {
+		return {
+            item: {
+                options: {
+                    lense_option1: {
+                        lense_option_label: null,
+                    },
+                    lense_option2: {
+                        lense_option_label: null,
+                    }
+                }
+            },
+            border_style: {
+                border: "solid 2px red"
+            },
+            checked_color: null,
+            checked_grey: false,
+            checked_green: false,
+            checked_brown: false,
+            checked_blue: false,
+            checked_pink: false,
+            colors: {
+                Grey: { backgroundColor: '#999999' },
+                Green: { backgroundColor: '#4ca64c' },
+                Brown: { backgroundColor: '#ae3f3f' },
+                Blue: { backgroundColor: '#0080ff' },
+                Pink: { backgroundColor: '#FFC0CB' },
+            },
+			product_data: [],
+		}
+    },
+    methods:{
+        getCoverImg: function(arr){
+			for (var photo in arr){
+				return arr[photo].link;
+			}
+        },
+        selectColor:function(color){
+            this.checked_color = color; 
+        },
+        is_checked: function(color){
+            return 'checkbox-color-filter';
+        },
+       	addToCart(item){
+			swal("Success!", "The item has been added to the cart!", "success");
+			bus.$emit("add_cart", item);
+		}
+    },
+    created(){
+        var self = this;
+		db.collection('item').doc(this.$route.params.item_id).get().then(function(doc){
+            self.item = doc.data();
+        });
+    }
 }
 </script>
 
@@ -289,7 +290,8 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .checkbox-color-filter:checked + .color-filter{
-    box-shadow: 0 0 0px 2px #ff3131 !important;
-    -webkit-box-shadow: 0 0 0px 2px #ff3131 !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
 }
+
 </style>
