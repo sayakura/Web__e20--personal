@@ -3,7 +3,7 @@
         <div class="wrap_header fixed-header2 trans-0-4">
             <!-- Logo -->
             <a href="index.html" class="logo">
-                <img src="@/assets/images/icons/logo.png" alt="IMG-LOGO">
+                <img src="@/assets/Logo.png" alt="IMG-LOGO" style="height:100px">
             </a>
 
             <!-- Menu -->
@@ -42,48 +42,48 @@
 
                 <div class="header-wrapicon2">
                     <img src="@/assets/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-                    <span class="header-icons-noti">0</span>
+                    <span class="header-icons-noti">{{item_list.length}}</span>
 
                     <!-- Header cart noti -->
-                    <div class="header-cart header-dropdown">
-                        <ul class="header-cart-wrapitem">
-                            <li class="header-cart-item">
-                                <div class="header-cart-item-img">
-                                    <img src="@/assets/images/item-cart-01.jpg" alt="IMG">
-                                </div>
+					<div class="header-cart header-dropdown">
+							<ul class="header-cart-wrapitem" v-for="item in item_list" :key="item.id">
+								<li class="header-cart-item">
+									<div class="header-cart-item-img">
+										<img :src="getCoverImg(item.product_photos)" alt="IMG">
+									</div>
 
-                                <div class="header-cart-item-txt">
-                                    <a href="#" class="header-cart-item-name">
-                                        White Shirt With Pleat Detail Back
-                                    </a>
+									<div class="header-cart-item-txt">
+										<a href="#" class="header-cart-item-name">
+											{{ item.product_name ?  item.product_name : "The cart is empty."}}
+										</a>
 
-                                    <span class="header-cart-item-info">
-                                        1 x $19.00
-                                    </span>
-                                </div>
-                            </li>
-                        </ul>
+										<span class="header-cart-item-info" v-if="item.product_price">
+											{{ '$' + item.product_price }}
+										</span>
+									</div>
+								</li>
+							</ul>
 
-                        <div class="header-cart-total">
-                            Total: $75.00
-                        </div>
+							<div class="header-cart-total">
+								{{'$' + totolPrice}}
+							</div>
 
-                        <div class="header-cart-buttons">
-                            <div class="header-cart-wrapbtn">
-                                <!-- Button -->
-                                <a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                                    View Cart
-                                </a>
-                            </div>
+							<div class="header-cart-buttons">
+								<div class="header-cart-wrapbtn">
+									<!-- Button -->
+									<a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+										View Cart
+									</a>
+								</div>
 
-                            <div class="header-cart-wrapbtn">
-                                <!-- Button -->
-                                <a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                                    Check Out
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+								<div class="header-cart-wrapbtn">
+									<!-- Button -->
+									<a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+										Check Out
+									</a>
+								</div>
+							</div>
+						</div>
                 </div>
             </div>
         </div>
@@ -92,7 +92,7 @@
 			<div class="container-menu-header-v2 p-t-26">
 				<div class="topbar2">
 					<a href="index.html" class="logo2">
-						<img src="@/assets/images/icons/logo.png" alt="IMG-LOGO">
+						<img src="@/assets/Logo.png" alt="IMG-LOGO" style="height:100px">
 					</a>
 
 					<div class="topbar-child2">
@@ -110,30 +110,30 @@
 
 						<div class="header-wrapicon2 m-r-13">
 							<img src="@/assets/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-							<span class="header-icons-noti">0</span>
+							<span class="header-icons-noti">{{item_list.length}}</span>
 
 							<!-- Header cart noti -->
 							<div class="header-cart header-dropdown">
-								<ul class="header-cart-wrapitem">
+								<ul class="header-cart-wrapitem" v-for="item in item_list" :key="item.id">
 									<li class="header-cart-item">
 										<div class="header-cart-item-img">
-											<img src="@/assets/images/item-cart-01.jpg" alt="IMG">
+											<img :src="getCoverImg(item.product_photos)" alt="IMG">
 										</div>
 
 										<div class="header-cart-item-txt">
 											<a href="#" class="header-cart-item-name">
-												description
+												{{ item.product_name }}
 											</a>
 
 											<span class="header-cart-item-info">
-												$19.00
+												{{ '$' + item.product_price }}
 											</span>
 										</div>
 									</li>
 								</ul>
 
 								<div class="header-cart-total">
-									Total: $75.00
+									{{'$' + totolPrice}}
 								</div>
 
 								<div class="header-cart-buttons">
@@ -196,7 +196,7 @@
 			<div class="wrap_header_mobile">
 				<!-- Logo moblie -->
 				<a href="index.html" class="logo-mobile">
-					<img src="@/assets/images/icons/logo.png" alt="IMG-LOGO">
+					<img src="@/assets/Logo.png" alt="IMG-LOGO" style="height:100px">
 				</a>
 
 				<!-- Button show menu -->
@@ -211,62 +211,30 @@
 
 						<div class="header-wrapicon2">
 							<img src="@/assets/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-							<span class="header-icons-noti">0</span>
+							<span class="header-icons-noti">{{item_list.length}}</span>
 
 							<!-- Header cart noti -->
 							<div class="header-cart header-dropdown">
-								<ul class="header-cart-wrapitem">
+								<ul class="header-cart-wrapitem" v-for="item in item_list" :key="item.id">
 									<li class="header-cart-item">
 										<div class="header-cart-item-img">
-											<img src="@/assets/images/item-cart-01.jpg" alt="IMG">
+											<img :src="getCoverImg(item.product_photos)" alt="IMG">
 										</div>
 
 										<div class="header-cart-item-txt">
 											<a href="#" class="header-cart-item-name">
-												White Shirt With Pleat Detail Back
+												{{ item.product_name ?  item.product_name : "The cart is empty."}}
 											</a>
 
 											<span class="header-cart-item-info">
-												1 x $19.00
-											</span>
-										</div>
-									</li>
-
-									<li class="header-cart-item">
-										<div class="header-cart-item-img">
-											<img src="@/assets/images/item-cart-02.jpg" alt="IMG">
-										</div>
-
-										<div class="header-cart-item-txt">
-											<a href="#" class="header-cart-item-name">
-												Converse All Star Hi Black Canvas
-											</a>
-
-											<span class="header-cart-item-info">
-												1 x $39.00
-											</span>
-										</div>
-									</li>
-
-									<li class="header-cart-item">
-										<div class="header-cart-item-img">
-											<img src="@/assets/images/item-cart-03.jpg" alt="IMG">
-										</div>
-
-										<div class="header-cart-item-txt">
-											<a href="#" class="header-cart-item-name">
-												Nixon Porter Leather Watch In Tan
-											</a>
-
-											<span class="header-cart-item-info">
-												1 x $17.00
+												{{ '$' + item.product_price }}
 											</span>
 										</div>
 									</li>
 								</ul>
 
 								<div class="header-cart-total">
-									Total: $75.00
+									{{'$' + totolPrice}}
 								</div>
 
 								<div class="header-cart-buttons">
@@ -344,8 +312,39 @@
 </template>
 
 <script>
+import firebase from 'firebase'
+import { bus } from '../main'
+import Cookie from 'js-cookie'
 export default {
-    name: "Header",
+	name: "Header",
+	data(){
+		return {
+			item_list: []
+		}
+	},
+	methods:{
+		getCoverImg: function(arr){
+			for (var photo in arr){
+				return arr[photo].link;
+			}
+		},
+	},
+	computed:{
+		totolPrice: function(){
+			var total = 0;
+			for (var i = 0; i < this.item_list.length; i++){
+				total += parseInt(this.item_list[i].product_price);
+			}
+			return  parseInt(total);
+		}
+	},
+	created(){
+		var self = this;
+		bus.$on("add_cart", function(item){
+			self.item_list.push(item);
+			Cookie.set("shopping_cart", JSON.stringify(self.item_list));
+		});
+	}
 }
 </script>
 
