@@ -62,6 +62,10 @@
 </template>
 
 <script>
+import swal from 'sweetalert'
+import firebase from 'firebase'
+const au = firebase.auth();
+const db = firebase.firestore();
 export default {
     name: "SignInUp",
     data(){
@@ -74,6 +78,50 @@ export default {
 			sign_in_password: null,
 			sign_in_email: null,
 		}
+	},
+	methods:{
+		signin:function() {
+			var self = this;
+			if (this.sign_in_email && this.sign_in_password){
+				firebase.auth().signInWithEmailAndPassword(this.sign_in_email, this.sign_in_password).then(
+				function(user){
+					self.sign_in_email = "";
+					self.sign_in_password = "";
+					 swal("Success!", "Successfully sign in!", "success").then(() => {
+						self.$router.push('/');
+					 });
+				}
+				).catch(function(error){
+					swal("Failed!", error.message, "error");
+				});
+			} else {
+				swal("Failed!", "Missing field(s)!", "error");
+			}
+				
+		},
+		signup:function(){
+			var self = this;
+			if (this.emailAddress && this.password && this.phoneNumber && this.fullName){
+				firebase.auth().createUserWithEmailAndPassword(this.emailAddress, this.password).then(usr => {
+					var user = firebase.auth().currentUser;
+					user.updateProfile({
+						email: self.emailAddress,
+						displayName: self.fullName,
+						phoneNumber: self.phoneNumber
+					}).then(function(){
+						db.collection('users').doc(user.uid).set({
+							email: self.emailAddress,
+							displayName: self.fullName,
+							phoneNumber: self.phoneNumber
+						}).then(() => { swal("Success!", "Successfully signed up!", "success").then(() => {self.$router.push('/')}) });
+					}).catch(function(err){ swal({title: "Failed!",text: err.message,icon: "error",button: "Ok"}) });
+				}).catch(function(err){ swal({title: "Failed!",text: err.message,icon: "error",button: "Ok"}) });
+			} else {
+				swal("Failed!", "Missing field(s)!", "error");
+			}
+		}
+	},
+	created(){
 	}
 }
 </script>

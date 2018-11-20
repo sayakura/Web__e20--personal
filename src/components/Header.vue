@@ -35,56 +35,19 @@
             <!-- Header Icon -->
             <div class="header-icons">
                 <a href="#" class="header-wrapicon1 dis-block">
-                    <img src="@/assets/images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
+					<i class="far fa-user-circle" v-if="!authUser" @click="signout"></i>
+                    <i class="fas fa-sign-out-alt" v-else @click="signout"></i>
                 </a>
 
                 <span class="linedivide1"></span>
 
-                <div class="header-wrapicon2">
-                    <img src="@/assets/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-                    <span class="header-icons-noti">{{item_list.length}}</span>
+                <div class="header-wrapicon2"  >
+                    <img src="@/assets/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON"  @click="showCart(0)">
+                    <span class="header-icons-noti">{{item_count}}</span>
 
                     <!-- Header cart noti -->
-					<div class="header-cart header-dropdown">
-							<ul class="header-cart-wrapitem" v-for="item in item_list" :key="item.id">
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img :src="getCoverImg(item.product_photos)" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											{{ item.product_name ?  item.product_name : "The cart is empty."}}
-										</a>
-
-										<span class="header-cart-item-info" v-if="item.product_price">
-											{{ '$' + item.product_price }}
-										</span>
-									</div>
-								</li>
-							</ul>
-
-							<div class="header-cart-total">
-								{{'$' + totolPrice}}
-							</div>
-
-							<div class="header-cart-buttons">
-								<div class="header-cart-wrapbtn">
-									<!-- Button -->
-									<a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-										View Cart
-									</a>
-								</div>
-
-								<div class="header-cart-wrapbtn">
-									<!-- Button -->
-									<a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-										Check Out
-									</a>
-								</div>
-							</div>
-						</div>
-                </div>
+					<Cart id="cart" />
+				</div>
             </div>
         </div>
 		<header class="header2">
@@ -97,61 +60,23 @@
 
 					<div class="topbar-child2">
 						<span class="topbar-email">				
-							<router-link to="/login">Login</router-link>
+							<router-link to="/login">{{ authUser ? authUser.email : 'Login'}}</router-link>
 						</span>
 
-				
 						<!--  -->
-						<a href="#" class="header-wrapicon1 dis-block m-l-30">
-							<img src="@/assets/images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
+						<a href="#" class="header-wrapicon1 dis-block m-l-30" >
+							<i class="far fa-user-circle" v-if="!authUser" @click="signout"></i>
+                    		<i class="fas fa-sign-out-alt" v-else @click="signout"></i>
 						</a>
 
 						<span class="linedivide1"></span>
 
 						<div class="header-wrapicon2 m-r-13">
-							<img src="@/assets/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-							<span class="header-icons-noti">{{item_list.length}}</span>
+							<img src="@/assets/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON"  @click="showCart(1)">
+							<span class="header-icons-noti">{{item_count}}</span>
 
 							<!-- Header cart noti -->
-							<div class="header-cart header-dropdown">
-								<ul class="header-cart-wrapitem" v-for="item in item_list" :key="item.id">
-									<li class="header-cart-item">
-										<div class="header-cart-item-img">
-											<img :src="getCoverImg(item.product_photos)" alt="IMG">
-										</div>
-
-										<div class="header-cart-item-txt">
-											<a href="#" class="header-cart-item-name">
-												{{ item.product_name }}
-											</a>
-
-											<span class="header-cart-item-info">
-												{{ '$' + item.product_price }}
-											</span>
-										</div>
-									</li>
-								</ul>
-
-								<div class="header-cart-total">
-									{{'$' + totolPrice}}
-								</div>
-
-								<div class="header-cart-buttons">
-									<div class="header-cart-wrapbtn">
-										<!-- Button -->
-										<a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-											View Cart
-										</a>
-									</div>
-
-									<div class="header-cart-wrapbtn">
-										<!-- Button -->
-										<a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-											Check Out
-										</a>
-									</div>
-								</div>
-							</div>
+							<Cart />
 						</div>
 					</div>
 				</div>
@@ -204,55 +129,18 @@
 					<!-- Header Icon mobile -->
 					<div class="header-icons-mobile">
 						<a href="#" class="header-wrapicon1 dis-block">
-							<img src="@/assets/images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
+							<i class="far fa-user-circle" v-if="!authUser" @click="signout"></i>
+                    		<i class="fas fa-sign-out-alt" v-else @click="signout"></i>
 						</a>
 
 						<span class="linedivide2"></span>
 
 						<div class="header-wrapicon2">
-							<img src="@/assets/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-							<span class="header-icons-noti">{{item_list.length}}</span>
+							<img src="@/assets/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON"  @click="showCart(2)">
+							<span class="header-icons-noti">{{item_count}}</span>
 
 							<!-- Header cart noti -->
-							<div class="header-cart header-dropdown">
-								<ul class="header-cart-wrapitem" v-for="item in item_list" :key="item.id">
-									<li class="header-cart-item">
-										<div class="header-cart-item-img">
-											<img :src="getCoverImg(item.product_photos)" alt="IMG">
-										</div>
-
-										<div class="header-cart-item-txt">
-											<a href="#" class="header-cart-item-name">
-												{{ item.product_name ?  item.product_name : "The cart is empty."}}
-											</a>
-
-											<span class="header-cart-item-info">
-												{{ '$' + item.product_price }}
-											</span>
-										</div>
-									</li>
-								</ul>
-
-								<div class="header-cart-total">
-									{{'$' + totolPrice}}
-								</div>
-
-								<div class="header-cart-buttons">
-									<div class="header-cart-wrapbtn">
-										<!-- Button -->
-										<a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-											View Cart
-										</a>
-									</div>
-
-									<div class="header-cart-wrapbtn">
-										<!-- Button -->
-										<a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-											Check Out
-										</a>
-									</div>
-								</div>
-							</div>
+							<Cart />
 						</div>
 					</div>
 
@@ -315,34 +203,53 @@
 import firebase from 'firebase'
 import { bus } from '../main'
 import Cookie from 'js-cookie'
+import Cart from '@/components/Cart'
 export default {
 	name: "Header",
 	data(){
 		return {
+			authUser: null,
+			item_count: 0,
 			item_list: []
 		}
 	},
 	methods:{
-		getCoverImg: function(arr){
-			for (var photo in arr){
-				return arr[photo].link;
+		showCart:function(id){
+			var carts = $('.header-cart');
+			for (var i = 0; i < carts.length; i++){
+				if (id == i)
+					$(carts[i]).toggleClass('show-header-dropdown')
 			}
 		},
-	},
-	computed:{
-		totolPrice: function(){
-			var total = 0;
-			for (var i = 0; i < this.item_list.length; i++){
-				total += parseInt(this.item_list[i].product_price);
+		signout:function(){
+			if (this.authUser){
+				firebase.auth().signOut();
+				location.reload();
+			} else {
+				this.$router.push('/login');
 			}
-			return  parseInt(total);
 		}
+	},
+	components:{
+		Cart
 	},
 	created(){
 		var self = this;
 		bus.$on("add_cart", function(item){
+			self.item_count++;
 			self.item_list.push(item);
 			Cookie.set("shopping_cart", JSON.stringify(self.item_list));
+		});
+		bus.$on("delete_item", function(){
+			self.item_count--;
+		});
+		firebase.auth().onAuthStateChanged(user => {
+			if (user){
+				self.authUser = user;
+			}
+		});
+		bus.$on("cart_count", function(length){
+			self.item_count = parseInt(length);
 		});
 	}
 }
@@ -355,5 +262,8 @@ export default {
 }
 .topbar-email:hover{
 	text-decoration: underline;
+}
+.fa-sign-out-alt, .fa-user-circle{
+	font-size: 25px;
 }
 </style>
