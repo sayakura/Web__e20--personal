@@ -31,15 +31,17 @@
 							<div class="col-sm-6 col-md-4 col-lg-3 p-b-50" v-for="(item, index) in product_bestseller" :key="index">
 								<!-- Block2 -->
 								<div class="block2">
-									<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
+									<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew hov-img-zoom" @click="goToThatItem(item.id)">
 										<img :src="getCoverImg(item.product_photos)" alt="IMG-PRODUCT">
 
 										<div class="block2-overlay trans-0-4">
 											<div class="block2-btn-addcart w-size1 trans-0-4">
-												<!-- Button -->
-												<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4" @click="addToCart(item)">
-													Add to Cart
-												</button>
+												 <ul class="flex-w">
+													<li class="m-r-10"  v-for="(color, index) in colors" :key="index + Math.random()">
+														<input class="checkbox-color-filter" :id="index + item.id" type="checkbox" v-if="item.product_colors.includes(index)">
+														<label class="color-filter" :style="color" :for="index + item.id" v-if="item.product_colors.includes(index)"></label>
+													</li>
+												</ul>
 											</div>
 										</div>
 									</div>
@@ -64,15 +66,17 @@
 							<div class="col-sm-6 col-md-4 col-lg-3 p-b-50" v-for="(item, index) in product_men" :key="index">
 								<!-- Block2 -->
 								<div class="block2">
-									<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
+									<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew hov-img-zoom" @click="goToThatItem(item.id)">
 										<img :src="getCoverImg(item.product_photos)" alt="IMG-PRODUCT">
 
 										<div class="block2-overlay trans-0-4">
 											<div class="block2-btn-addcart w-size1 trans-0-4">
-												<!-- Button -->
-												<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4" @click="addToCart(item)">
-													Add to Cart
-												</button>
+												 <ul class="flex-w">
+													<li class="m-r-10"  v-for="(color, index) in colors" :key="index + Math.random()">
+														<input class="checkbox-color-filter" :id="index + item.id" type="checkbox" v-if="item.product_colors.includes(index)">
+														<label class="color-filter" :style="color" :for="index + item.id" v-if="item.product_colors.includes(index)"></label>
+													</li>
+												</ul>
 											</div>
 										</div>
 									</div>
@@ -97,15 +101,17 @@
 							<div class="col-sm-6 col-md-4 col-lg-3 p-b-50" v-for="(item, index) in product_women" :key="index">
 								<!-- Block2 -->
 								<div class="block2">
-									<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
+									<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew hov-img-zoom" @click="goToThatItem(item.id)">
 										<img :src="getCoverImg(item.product_photos)" alt="IMG-PRODUCT">
 
 										<div class="block2-overlay trans-0-4">
 											<div class="block2-btn-addcart w-size1 trans-0-4">
-												<!-- Button -->
-												<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4" @click="addToCart(item)">
-													Add to Cart
-												</button>
+												 <ul class="flex-w">
+													<li class="m-r-10"  v-for="(color, index) in colors" :key="index + Math.random()">
+														<input class="checkbox-color-filter" :id="index + item.id" type="checkbox" v-if="item.product_colors.includes(index)">
+														<label class="color-filter" :style="color" :for="index + item.id" v-if="item.product_colors.includes(index)"></label>
+													</li>
+												</ul>
 											</div>
 										</div>
 									</div>
@@ -140,7 +146,14 @@ export default {
 	name: "HomeProduct",
 	data() {
 		return {
-			product_data: [],
+			product_data: [], 
+			colors: {
+                Grey: { backgroundColor: '#999999' },
+                Green: { backgroundColor: '#4ca64c' },
+                Brown: { backgroundColor: '#ae3f3f' },
+                Blue: { backgroundColor: '#0080ff' },
+                Pink: { backgroundColor: '#FFC0CB' },
+            }
 		}
 	},
 	methods:{
@@ -152,6 +165,9 @@ export default {
 		addToCart(item){
 			swal("Success!", "The item has been added to the cart!", "success");
 			bus.$emit("add_cart", item);
+		},
+		goToThatItem(id){
+			this.$router.push('/item/' + id);
 		}
 	},
 	computed:{
@@ -184,6 +200,11 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+	.block2-img{
+		cursor: pointer;
+	}
+	.color-filter{
+		border: solid 2px white;
+	}
 </style>
