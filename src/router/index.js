@@ -5,6 +5,7 @@ import About from '@/components/About'
 import Login from '@/components/Login'
 import Product from '@/components/Product'
 import Checkout from '@/components/Checkout'
+import Contact from '@/components/Contact'
 Vue.use(Router)
 
 export default new Router({
@@ -33,6 +34,11 @@ export default new Router({
       path: '/checkout',
       name: 'Checkout',
       component: Checkout
+    },
+    {
+      path: '/contact',
+      name: 'Contact',
+      component: Contact
     }
   ]
 })

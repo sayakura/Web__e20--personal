@@ -76,8 +76,7 @@
                         <div class="form-group">
                             <select class="form-control" id="color-selector">
                                 <option>Single Vision</option>
-                                <option>Non Prescrition</option>
-                                <option>Frame Obly</option>
+                                
                             </select>
                         </div>
 

@@ -1,8 +1,7 @@
 <template>
     <section id="item-detail">
         <!-- Product Detail -->
-        <hr class="item-hr">
-        <div class="container bgwhite p-t-10 p-b-80">
+        <div class="container bgwhite m-t-10 p-b-80">
             <!-- breadcrumb -->
             <div class="bread-crumb bgwhite flex-w p-l-52 p-r-15 p-t-30 p-l-15-sm">
                 <a href="index.html" class="s-text16">
@@ -110,7 +109,7 @@
                                 <div class="btn-addcart-product-detail size9 trans-0-4 m-t-10 m-b-10">
                                     <!-- Button -->
                                     <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4" @click="addToCart(item)">
-                                        Add to Cart
+                                        Add to Cart 
                                     </button>
                                 </div>
                             </div>
@@ -170,7 +169,7 @@
                             <li class="s-text8"  v-if="index.indexOf('label') < 0"><input type="checkbox" class="m-r-10" v-model="item_specification.lense_option2" :value="option">{{option.text + ' $ ' + option.price}}</li>
                         </div>
 
-                        <strong class="label-ul-title">Lense Coating Option</strong>
+                        <strong class="label-ul-title" id="confirm_card_position">Lense Coating Option</strong>
 
                         <div v-for="(option, index) in item.options['lense_option3']" :key="Math.random() + index">
                             <li class="s-text8"  v-if="index.indexOf('label') < 0"><input type="checkbox" class="m-r-10" v-model="item_specification.lense_coating_option" :value="option">{{option.text + ' $ ' + option.price}}</li>
@@ -178,7 +177,7 @@
                     </ul>
                 </div>
                 <br >
-                <div class="confirm_card m-t-30">
+                <div class="confirm_card m-t-30" >
                     <h3 class="confirm_card-title"><i class="fas fa-chevron-left"></i>&nbsp;Confirmation&nbsp;<i class="fas fa-chevron-right"></i></h3>
                     <hr />
                     <ol class="confirm_list m-t-20" >
@@ -201,7 +200,7 @@
                         <li>
                             <hr />
                             <button type="button" class="btn btn-outline-warning btn-block  m-t-10" @click="confirm">
-                                Confirm
+                                {{form_complete ? 'Add to Cart' : 'Confirm'}}
                                 <i class="far fa-calendar-check p-l-5" v-if="form_complete"></i>
                                 <i class="far fa-calendar p-l-5" v-else></i>
                             </button>
@@ -276,9 +275,20 @@ export default {
             && this.item_specification.prescription_left.cylinder && this.item_specification.prescription_left.axis && 
             this.item_specification.prescription_right.sphere && this.item_specification.prescription_right.cylinder && 
             this.item_specification.prescription_right.axis && this.item_specification.pupil_distance;
-        }
+        },
+       
     },
     methods:{
+        selected_option: function(){
+            var options= [];
+            for (var i  = 0; i < this.item_specification.lense_option1.length; i++)
+                options.push(this.item_specification.lense_option1[i]);
+            for (var i  = 0; i < this.item_specification.lense_option2.length; i++)
+                options.push(this.item_specification.lense_option1[i]);
+            for (var i  = 0; i < this.item_specification.lense_coating_option.length; i++)
+                options.push(this.item_specification.lense_coating_option[i]);
+            this.item_specification.options = options; 
+        },
         getCoverImg: function(arr){
 			for (var photo in arr){
 				return arr[photo].link;
@@ -288,15 +298,14 @@ export default {
             this.item_specification.color = color; 
         },
        	addToCart(item){
-			swal("Success!", "The item has been added to the cart!", "success");
-			bus.$emit("add_cart", item);
+            document.getElementById('confirm_card_position').scrollIntoView()
         },
         decrement: function(){
             if (this.item_specification.quantity > 1)
                 this.item_specification.quantity--;
         },
         increment: function(){
-            this.item_specification.quantity++;
+            this.item_specification.quantity++;  
         },
         arrWithTextOnly:function(arr){
             var temp = [];
@@ -306,6 +315,7 @@ export default {
             return (temp);
         },
         confirm: function(){
+            var self = this;
             if (this.form_complete) {
                 swal({
                     title: "Confirm",
@@ -316,7 +326,12 @@ export default {
                     })
                     .then((confirm) => {
                         if (confirm) {
+                            self.selected_option();
+                            self.item_specification.product_name = self.item.product_name;
+                            self.item_specification.id = self.$route.params.item_id;
                             swal("Success!", "The item has been added to the cart!", "success");
+                            bus.$emit("add_cart", self.item_specification);
+                            console.log(self.item_specification)
                         }
                     });
             } else {
@@ -326,6 +341,7 @@ export default {
 
     },
     created(){
+        $(window).scrollTop(0);
         var self = this;
 		db.collection('item').doc(this.$route.params.item_id).get().then(function(doc){
             self.item = doc.data();
@@ -335,9 +351,6 @@ export default {
 </script>
 
 <style>
-.item-hr{
-    box-shadow: 0 2px 3px lightgray;
-}
 #color-selector{
     width: 300px;
 }
@@ -424,6 +437,7 @@ input[type='number']::-webkit-outer-spin-button {
 .confirm_list li strong{
     color: rgb(214, 94, 73);
 }
+
 @media only screen and (max-width: 800px) {
     #instruction{
         display: none;

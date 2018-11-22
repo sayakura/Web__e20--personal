@@ -4,15 +4,15 @@
         <ul class="header-cart-wrapitem" v-for="item in item_list" :key="item.id + Math.random()">
             <li class="header-cart-item">
                 <div class="header-cart-item-img"  @click="deleteThisItem(item.id)">
-                    <img :src="getCoverImg(item.product_photos)" alt="IMG">
+                    <img :src="getCoverImg(item.pt)" alt="IMG">
                 </div>
 
                 <div class="header-cart-item-txt">
                     <a href="#" class="header-cart-item-name">
-                        {{ item.product_name }}
+                        {{ item.pn }}
                     </a>
                     <span class="header-cart-item-info">
-                        {{ '$' + item.product_price }}
+                        {{ '$' + item.pr }}
                     </span>
                 </div>
             </li>
@@ -88,13 +88,22 @@ export default {
             bus.$emit("cart_count",  self.item_list.length);
         }
 		bus.$on("add_cart", function(item){
+            
             var obj = {
-                product_photos: item.product_photos,
-                product_price: item.product_price,
-                product_name: item.product_name,
-                id: item.id
+                pt: item.product_photos, 
+                pr: item.product_price,
+                pn: item.product_name,
+                id: item.id,
+                c: item.color, //color
+                pt: item.prescription_type, //prescription type
+                pl: item.prescription_left, //p l
+                pr: item.prescription_right, //p l
+                pd: item.pupil_distance,
+                op: item.options
             }
+            console.log(obj)
             self.item_list.push(obj);
+            return ;
             Cookie.set("shopping_cart", JSON.stringify(self.item_list));
         });
         $('.js-show-header-dropdown').on('click', function () {

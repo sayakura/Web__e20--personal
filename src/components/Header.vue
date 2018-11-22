@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="page-header">
         <div class="wrap_header fixed-header2 trans-0-4">
             <!-- Logo -->
             <a href="index.html" class="logo">
@@ -265,5 +265,8 @@ export default {
 }
 .fa-sign-out-alt, .fa-user-circle{
 	font-size: 25px;
+}
+#page-header{
+    box-shadow: 0 2px 3px lightgray;
 }
 </style>
