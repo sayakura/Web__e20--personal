@@ -17,7 +17,7 @@
                         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                     </div>
                 </div>
-                <button class="sizefull bg1 hov1 s-text1 trans-0-4" id="contact-btn-send">
+                <button class="sizefull bg1 hov1 s-text1 trans-0-4" id="contact-btn-send" @click="contact_button_send">
                     Send
                 </button>
             </form>
@@ -27,13 +27,37 @@
 </template>
 
 <script>
+import firebase from '../firebase/init'
 import Header from '@/components/Header'
 import Footer from  '@/components/Footer'
+import swal from 'sweetalert';
+
+const db = firebase.firestore();
+
 export default {
     name: "Contact",
+    data(){
+        return {
+            email: null,
+            content: null,
+            created_by: null,
+        }
+    },
     components: {
         Header,
         Footer
+    },
+    methods: {
+        contact_button_send: function(){
+            var obj = {
+                email: this.email,
+                content: this.content,
+                created_by: this.created_by
+            }
+            db.collection('email').add(obj).then(()=> {
+                swal("Success!", "This message has been sent!", "success");
+            });
+        }
     }
 }
 </script>
